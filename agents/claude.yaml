@@ -1,0 +1,30 @@
+abi: 6
+ignore-if-missing: true
+unsafe-host-runtime: true
+# Claude CLI runs on Bun, which probes several host runtime files during startup
+# (dynamic linker cache, /proc, entropy source, timezone, CPU info).
+# These read-only rules keep Bun stable in the sandbox while preserving
+# a least-privilege policy for the rest of the filesystem.
+fs:
+  - rw:$HOME/.claude.json
+  - rw:$HOME/.claude.json.lock
+  - rw:$HOME/.claude/
+  - rw:$HOME/.local/state/claude/
+  - rw:$PWD
+  - rx:$HOME/.local/share/claude/
+  - r:/dev/urandom
+  - r:/etc/hosts
+  - r:/etc/ld.so.cache
+  - r:/etc/localtime
+  - r:/etc/nsswitch.conf
+  - r:/etc/resolv.conf
+  - r:/proc/
+  - r:/proc/self/cgroup
+  - r:/proc/self/maps
+  - r:/proc/stat
+  - r:/proc/sys/vm/mmap_min_addr
+  - r:/proc/sys/vm/overcommit_memory
+  - r:/sys/devices/system/cpu/online
+  - rw:/dev/null
+net:
+  - c:443

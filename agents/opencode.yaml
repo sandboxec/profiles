@@ -1,0 +1,32 @@
+abi: 6
+ignore-if-missing: true
+unsafe-host-runtime: true
+fs:
+  - rw:/tmp
+  - rw:$HOME/.cache/opencode
+  - rw:$HOME/.local/share/opencode
+  - rw:$PWD
+  - r:/dev/random
+  - r:/dev/urandom
+  - r:/etc/hosts
+  - r:/etc/ld.so.cache
+  - r:/etc/ld.so.cache
+  - r:/etc/nsswitch.conf
+  - r:/etc/resolv.conf
+  - r:/etc/ssl/certs
+  - r:/etc/ssl/certs/ca-certificates.crt
+  - r:/home/linuxbrew/.linuxbrew/etc/openssl@3/openssl.cnf
+  - r:/usr/lib/ssl/openssl.cnf
+  - r:/proc
+  - r:/proc/meminfo
+  - r:/proc/self/cgroup
+  - r:/proc/self/groups
+  - r:/proc/self/groups
+  - r:/proc/self/maps
+  - r:/proc/stat
+  - r:/sys/devices/system/cpu/online
+  - r:/usr/lib/locale/locale-archive
+  - r:/usr/share/locale/locale.alias
+  - rw:/dev/null
+net:
+  - c:443
