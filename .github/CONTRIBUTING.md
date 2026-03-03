@@ -24,6 +24,13 @@ When changing a profile (`*.yaml`):
 4. Keep `unsafe-host-runtime: true` only when needed for host-linked runtimes.
 5. Use `ignore-if-missing: true` only for optional paths.
 
+## Use the skill guide
+
+For profile authoring and tuning workflow, follow [SKILL.md](../SKILL.md).
+
+- Treat it as the command-first playbook for deriving rules from `your-command`.
+- Include rule-by-rule rationale and validation commands in your PR notes.
+
 ## Group folders
 
 Profiles may be organized into group folders (for example, `agents/`) when it improves clarity.
