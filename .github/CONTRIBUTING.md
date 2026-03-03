@@ -24,6 +24,13 @@ When changing a profile (`*.yaml`):
 4. Keep `unsafe-host-runtime: true` only when needed for host-linked runtimes.
 5. Use `ignore-if-missing: true` only for optional paths.
 
+When validating profile behavior:
+
+- Prefer `--config <local-profile.yaml>` for reproducible in-repo checks.
+- `--config` also accepts remote `http(s)` YAML URLs when needed for comparison.
+- `--named-config <name>` (or `-C <name>`) resolves profiles from `sandboxec/profiles`.
+- Do not combine `--config` and `--named-config` in the same command.
+
 ## Use the skill guide
 
 For profile authoring and tuning workflow, follow [SKILL.md](../SKILL.md).

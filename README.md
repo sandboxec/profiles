@@ -14,10 +14,10 @@ This repository contains YAML policy files you can pass to [**sandboxec**](https
 
 ## Quick start
 
-Run a command with a profile from this repo:
+Run a command with a named profile from this repo:
 
 ```bash
-sandboxec --config profiles/<group>/<profile>.yaml -- your-command
+sandboxec -C agents/claude -- claude --dangerously-skip-permissions
 ```
 
 ## How profiles are structured
@@ -31,6 +31,24 @@ Each profile uses Sandboxec YAML keys such as:
 - `net` — allow-list of TCP rights (`b`, `c`, `bc`) by port
 
 Rules are allow-list based: if it is not explicitly allowed, it is denied.
+
+## Config sources and precedence
+
+Sandboxec config can come from:
+
+- `--config <path-or-url>` for a local YAML file or remote `http(s)` YAML URL
+- `--named-config <name>` (or `-C <name>`) for a named profile resolved from `sandboxec/profiles`
+- automatic lookup when no explicit config flag is set:
+	1. `$XDG_CONFIG_HOME/sandboxec/sandboxec.yaml|yml`
+	2. `$HOME/.config/sandboxec/sandboxec.yaml|yml`
+	3. `/etc/sandboxec/sandboxec.yaml|yml`
+
+Rules to remember:
+
+- `--config` and `--named-config` cannot be used together.
+- Scalar CLI flags override YAML scalar values.
+- `--fs` and `--net` replace config lists when explicitly set.
+- If `--fs`/`--net` are not set, rule lists come from the loaded config.
 
 ## Tuning a profile
 
@@ -51,6 +69,12 @@ Useful fallback during compatibility issues:
 
 ```bash
 sandboxec --best-effort --config profiles/<group>/<profile>.yaml -- your-command
+```
+
+You can also load YAML policy from a remote URL:
+
+```bash
+sandboxec --config https://example.com/sandboxec.yaml -- your-command
 ```
 
 ## Contributing

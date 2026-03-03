@@ -40,6 +40,8 @@ If documentation or usage changes, update [README.md](README.md) accordingly.
 
 - Use `abi: 6` unless explicitly told otherwise.
 - Prefer `--config <file>` with YAML profiles for repeatable policies; use CLI flags (`--fs`, `--net`) only for quick experiments.
+- `--config` may point to local YAML or remote `http(s)` YAML; prefer local repo files for repeatable tuning.
+- `--named-config <name>` (or `-C <name>`) resolves upstream profiles from `sandboxec/profiles` and is useful for baseline comparison.
 - Prefer `ignore-if-missing: true` only for optional paths.
 - Use `restrict-scoped: true` only when scoped IPC restrictions are required and environment supports ABI v6+.
 - Keep `unsafe-host-runtime: true` only when host-linked runtime access is truly needed.
@@ -90,7 +92,8 @@ If any item is missing, do not keep the rule.
 Use option names and rights exactly as supported by current `sandboxec --help`:
 
 - config and rule inputs:
-  - `--config <path>`
+  - `--config <path-or-url>`
+  - `--named-config <name>` (`-C <name>`)
   - `--fs RIGHTS:PATH` (repeatable)
   - `--net RIGHTS:PORT` (repeatable)
 - behavior flags:
@@ -122,11 +125,12 @@ Prefer short aliases (`r`, `rx`, `rw`, `c`) in profiles for consistency with thi
 
 Keep these semantics in mind when testing profile changes:
 
-- config lookup (if `--config` is not provided):
+- config lookup (if neither `--config` nor `--named-config` is provided):
   1. `$XDG_CONFIG_HOME/sandboxec/sandboxec.yaml|yml`
   2. `$HOME/.config/sandboxec/sandboxec.yaml|yml`
   3. `/etc/sandboxec/sandboxec.yaml|yml`
 - precedence:
+  - `--config` and `--named-config` are mutually exclusive
   - scalar CLI flags override YAML scalar values
   - if `--fs` and/or `--net` are provided via CLI, they replace config lists
   - if not provided, `fs`/`net` rules come from YAML config
